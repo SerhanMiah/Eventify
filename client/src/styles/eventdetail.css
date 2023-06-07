@@ -1,0 +1,45 @@
+/* eventdetail.css */
+
+.event-detail-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.event-title {
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+.event-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.event-description {
+    font-size: 1.1em;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.event-info-card {
+    margin-top: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.event-info-card .card-title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.event-info-card .card-text {
+    margin-bottom: 15px;
+}
+
+.event-info-card .btn {
+    background-color: #ff9b21;  /* Or any color you want */
+    color: white;
+}

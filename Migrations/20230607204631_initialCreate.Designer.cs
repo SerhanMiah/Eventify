@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eventify.Migrations
 {
     [DbContext(typeof(EventifyContext))]
-    [Migration("20230607170418_initialCreate")]
+    [Migration("20230607204631_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -34,11 +34,9 @@ namespace Eventify.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -46,7 +44,6 @@ namespace Eventify.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -60,11 +57,9 @@ namespace Eventify.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -91,7 +86,6 @@ namespace Eventify.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
@@ -164,12 +158,10 @@ namespace Eventify.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -177,7 +169,6 @@ namespace Eventify.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -190,12 +181,10 @@ namespace Eventify.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Organizer")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("TicketLink")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -211,10 +200,10 @@ namespace Eventify.Migrations
                         {
                             Id = 1,
                             Category = "Tech",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9396),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9642),
                             Date = new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A tech conference with key speakers from around the world.",
-                            ImageUrl = "https://example.com/tech-conference.jpg",
+                            ImageUrl = "https://images.squarespace-cdn.com/content/59eb6488d7bdceee681392c3/1680686199568-OWQ2U5JE93OYJTIDF7P2/CET+3+%282%29.png?format=1500w&content-type=image%2Fpng",
                             IsOnline = false,
                             Location = "San Francisco",
                             MaxAttendees = 500,
@@ -226,10 +215,10 @@ namespace Eventify.Migrations
                         {
                             Id = 2,
                             Category = "Tech",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9405),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9651),
                             Date = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A summit dedicated to artificial intelligence trends and advancements.",
-                            ImageUrl = "https://example.com/ai-summit.jpg",
+                            ImageUrl = "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F507564539%2F433439078672%2F1%2Foriginal.20230504-132036?w=1000&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C52%2C1640%2C820&s=103e7a1a4466d09a5a882d09af11c698",
                             IsOnline = true,
                             Location = "New York",
                             MaxAttendees = 300,
@@ -241,10 +230,10 @@ namespace Eventify.Migrations
                         {
                             Id = 3,
                             Category = "Tech",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9407),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9654),
                             Date = new DateTime(2024, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A workshop focusing on the latest cybersecurity techniques.",
-                            ImageUrl = "https://example.com/cybersecurity-workshop.jpg",
+                            ImageUrl = "https://futurescot.com/wp-content/uploads/2023/02/CYBER-2024-thumbnail.png",
                             IsOnline = false,
                             Location = "Austin",
                             MaxAttendees = 100,
@@ -256,10 +245,10 @@ namespace Eventify.Migrations
                         {
                             Id = 4,
                             Category = "Tech",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9409),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9656),
                             Date = new DateTime(2024, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "An expo showcasing the latest in cloud computing technologies.",
-                            ImageUrl = "https://example.com/cloud-computing-expo.jpg",
+                            ImageUrl = "https://www.showsbee.com/newmaker/www/u/2015/201511/cfr_img/Cloud-Expo-Europe.png",
                             IsOnline = false,
                             Location = "Seattle",
                             MaxAttendees = 700,
@@ -271,10 +260,10 @@ namespace Eventify.Migrations
                         {
                             Id = 5,
                             Category = "Tech",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9411),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9658),
                             Date = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A fair displaying the most recent data science projects and studies.",
-                            ImageUrl = "https://example.com/data-science-fair.jpg",
+                            ImageUrl = "https://datainnovationsummit.com/wp-content/uploads/2023/05/DIS-24-link-preview.jpg",
                             IsOnline = true,
                             Location = "Boston",
                             MaxAttendees = 400,
@@ -286,10 +275,10 @@ namespace Eventify.Migrations
                         {
                             Id = 6,
                             Category = "Music",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9413),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9660),
                             Date = new DateTime(2024, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A music festival featuring artists from around the world.",
-                            ImageUrl = "https://example.com/global-music-festival.jpg",
+                            ImageUrl = "https://nationaltoday.com/wp-content/uploads/2022/08/4568086-min.jpg.webp",
                             IsOnline = false,
                             Location = "Los Angeles",
                             MaxAttendees = 10000,
@@ -301,10 +290,10 @@ namespace Eventify.Migrations
                         {
                             Id = 7,
                             Category = "Music",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9415),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9662),
                             Date = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A series of concerts streamed live from various locations.",
-                            ImageUrl = "https://example.com/virtual-concert.jpg",
+                            ImageUrl = "https://blog.siriusxm.com/wp-content/uploads/2022/02/22-5902_NxtWave_Vol4-1920x1080-1.jpg?w=940",
                             IsOnline = true,
                             Location = "Online",
                             MaxAttendees = 20000,
@@ -316,10 +305,10 @@ namespace Eventify.Migrations
                         {
                             Id = 8,
                             Category = "Music",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9417),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9663),
                             Date = new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "An evening of performances by renowned classical musicians.",
-                            ImageUrl = "https://example.com/classical-music-gala.jpg",
+                            ImageUrl = "https://www.icma-info.com/wp-content/uploads/2023/03/OV-A.-Liebreich.-Foto-Live-Music-Valencia-red.jpg",
                             IsOnline = false,
                             Location = "New York",
                             MaxAttendees = 500,
@@ -331,10 +320,10 @@ namespace Eventify.Migrations
                         {
                             Id = 9,
                             Category = "Music",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9418),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9665),
                             Date = new DateTime(2024, 8, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Showcase of the best indie music talent from across the globe.",
-                            ImageUrl = "https://example.com/indie-music-showcase.jpg",
+                            ImageUrl = "https://d31fr2pwly4c4s.cloudfront.net/3/b/9/1549401_59b37172_revival-music-festival-weekender-2024_1024.jpg",
                             IsOnline = false,
                             Location = "London",
                             MaxAttendees = 800,
@@ -346,10 +335,10 @@ namespace Eventify.Migrations
                         {
                             Id = 10,
                             Category = "Music",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9421),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9666),
                             Date = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A revival of the best rock and roll music from the 70s and 80s.",
-                            ImageUrl = "https://example.com/rock-and-roll-revival.jpg",
+                            ImageUrl = "https://d31fr2pwly4c4s.cloudfront.net/3/b/9/1549401_59b37172_revival-music-festival-weekender-2024_1024.jpg",
                             IsOnline = false,
                             Location = "Chicago",
                             MaxAttendees = 1500,
@@ -361,10 +350,10 @@ namespace Eventify.Migrations
                         {
                             Id = 11,
                             Category = "Sports",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9424),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9668),
                             Date = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A soccer championship featuring teams from around the world.",
-                            ImageUrl = "https://example.com/global-soccer-championship.jpg",
+                            ImageUrl = "https://digitalhub.fifa.com/transform/b4d0cf3d-795e-438c-9b59-753a030d2e24/Olympics-Paris-2024-Logo",
                             IsOnline = false,
                             Location = "Madrid",
                             MaxAttendees = 80000,
@@ -376,10 +365,10 @@ namespace Eventify.Migrations
                         {
                             Id = 12,
                             Category = "Sports",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9425),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9670),
                             Date = new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A virtual fitness marathon for fitness enthusiasts around the globe.",
-                            ImageUrl = "https://example.com/virtual-fitness-marathon.jpg",
+                            ImageUrl = "https://www.getkidsgoing.com/wp-install/wp-content/uploads/2021/02/virtual-tcs-london-marathon-run-for-get-kids-going-scaled.jpg",
                             IsOnline = true,
                             Location = "Online",
                             MaxAttendees = 10000,
@@ -391,10 +380,10 @@ namespace Eventify.Migrations
                         {
                             Id = 13,
                             Category = "Sports",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9427),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9671),
                             Date = new DateTime(2024, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A tennis tournament with international players.",
-                            ImageUrl = "https://example.com/international-tennis-open.jpg",
+                            ImageUrl = "https://www.tennistours.com/img/tournament-images/miami-open-index.jpg",
                             IsOnline = false,
                             Location = "Paris",
                             MaxAttendees = 20000,
@@ -406,10 +395,10 @@ namespace Eventify.Migrations
                         {
                             Id = 14,
                             Category = "Sports",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9429),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9673),
                             Date = new DateTime(2024, 7, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Skateboarding championship featuring international talent.",
-                            ImageUrl = "https://example.com/skateboarding-championship.jpg",
+                            ImageUrl = "https://cdn.dmcl.biz/media/image/239182/o/momiji+nishiya.jpg",
                             IsOnline = false,
                             Location = "Los Angeles",
                             MaxAttendees = 5000,
@@ -421,10 +410,10 @@ namespace Eventify.Migrations
                         {
                             Id = 15,
                             Category = "Sports",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9430),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9675),
                             Date = new DateTime(2024, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A gala featuring renowned international swimmers.",
-                            ImageUrl = "https://example.com/international-swimming-gala.jpg",
+                            ImageUrl = "https://medias.paris2024.org/uploads/2020/11/1331557859-scaled.jpeg?x-oss-process=image/resize,w_2560,h_1707,m_lfit/format,jpeg",
                             IsOnline = false,
                             Location = "Sydney",
                             MaxAttendees = 8000,
@@ -436,10 +425,10 @@ namespace Eventify.Migrations
                         {
                             Id = 16,
                             Category = "FamilyAndEducation",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9432),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9676),
                             Date = new DateTime(2024, 5, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A seminar on homeschooling, featuring experienced educators and parents.",
-                            ImageUrl = "https://example.com/homeschooling-seminar.jpg",
+                            ImageUrl = "https://navsh.org.uk/source/logo.png",
                             IsOnline = true,
                             Location = "Online",
                             MaxAttendees = 10000,
@@ -451,10 +440,10 @@ namespace Eventify.Migrations
                         {
                             Id = 17,
                             Category = "FamilyAndEducation",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9434),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9678),
                             Date = new DateTime(2024, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A science fair featuring projects from students around the globe.",
-                            ImageUrl = "https://example.com/international-science-fair.jpg",
+                            ImageUrl = "https://www.science-on-stage.eu/sites/default/files/images/ws22024_sons2024_banner_website.png",
                             IsOnline = false,
                             Location = "New York",
                             MaxAttendees = 2000,
@@ -466,10 +455,10 @@ namespace Eventify.Migrations
                         {
                             Id = 18,
                             Category = "FamilyAndEducation",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9435),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9679),
                             Date = new DateTime(2024, 8, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "A workshop on effective parenting strategies.",
-                            ImageUrl = "https://example.com/parenting-workshop.jpg",
+                            ImageUrl = "https://cdn-az.allevents.in/events5/banners/dc4c7886d025f6489c11418c2842bfcc1c620f6b06846a3c5d347df0a9eb13bc-rimg-w1200-h600-gmir.jpg?v=1684632258",
                             IsOnline = true,
                             Location = "Online",
                             MaxAttendees = 5000,
@@ -481,10 +470,10 @@ namespace Eventify.Migrations
                         {
                             Id = 19,
                             Category = "FamilyAndEducation",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9437),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9681),
                             Date = new DateTime(2024, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "An art festival for kids featuring art workshops and competitions.",
-                            ImageUrl = "https://example.com/art-festival-kids.jpg",
+                            ImageUrl = "https://www.infodesigners.eu/immagine_copia/Art-On-Climate-Illustration-Competition-2023.png",
                             IsOnline = false,
                             Location = "Berlin",
                             MaxAttendees = 5000,
@@ -496,10 +485,10 @@ namespace Eventify.Migrations
                         {
                             Id = 20,
                             Category = "FamilyAndEducation",
-                            CreatedAt = new DateTime(2023, 6, 7, 17, 4, 18, 132, DateTimeKind.Utc).AddTicks(9439),
+                            CreatedAt = new DateTime(2023, 6, 7, 20, 46, 31, 474, DateTimeKind.Utc).AddTicks(9733),
                             Date = new DateTime(2024, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "An online math Olympiad for students worldwide.",
-                            ImageUrl = "https://example.com/math-olympiad.jpg",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/IMO_logo.svg/1200px-IMO_logo.svg.png",
                             IsOnline = true,
                             Location = "Online",
                             MaxAttendees = 10000,
@@ -518,7 +507,6 @@ namespace Eventify.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AttendeeEmail")
@@ -699,9 +687,7 @@ namespace Eventify.Migrations
                 {
                     b.HasOne("Eventify.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("Eventify.Models.Attendee", null)
                         .WithMany("Tickets")

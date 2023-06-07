@@ -43,7 +43,7 @@ namespace Eventify.Data
                     Organizer = "Tech Conferences Inc.", 
                     MaxAttendees = 500, 
                     Category = Category.Tech,
-                    ImageUrl = "https://example.com/tech-conference.jpg",
+                    ImageUrl = "https://images.squarespace-cdn.com/content/59eb6488d7bdceee681392c3/1680686199568-OWQ2U5JE93OYJTIDF7P2/CET+3+%282%29.png?format=1500w&content-type=image%2Fpng",
                     IsOnline = false,
                     TicketLink = "https://techconferenceinc.com/tech-conference-2024"
                 },
@@ -57,7 +57,7 @@ namespace Eventify.Data
                     Organizer = "AI Events Ltd.",
                     MaxAttendees = 300,
                     Category = Category.Tech,
-                    ImageUrl = "https://example.com/ai-summit.jpg",
+                    ImageUrl = "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F507564539%2F433439078672%2F1%2Foriginal.20230504-132036?w=1000&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C52%2C1640%2C820&s=103e7a1a4466d09a5a882d09af11c698",
                     IsOnline = true,
                     TicketLink = "https://aievents.com/ai-summit-2024"
                 },
@@ -71,7 +71,7 @@ namespace Eventify.Data
                     Organizer = "Cyber Events",
                     MaxAttendees = 100,
                     Category = Category.Tech,
-                    ImageUrl = "https://example.com/cybersecurity-workshop.jpg",
+                    ImageUrl = "https://futurescot.com/wp-content/uploads/2023/02/CYBER-2024-thumbnail.png",
                     IsOnline = false,
                     TicketLink = "https://cyberevents.com/cybersecurity-workshop-2024"
                 },
@@ -85,7 +85,7 @@ namespace Eventify.Data
                     Organizer = "Cloud Events",
                     MaxAttendees = 700,
                     Category = Category.Tech,
-                    ImageUrl = "https://example.com/cloud-computing-expo.jpg",
+                    ImageUrl = "https://www.showsbee.com/newmaker/www/u/2015/201511/cfr_img/Cloud-Expo-Europe.png",
                     IsOnline = false,
                     TicketLink = "https://cloudevents.com/cloud-computing-expo-2024"
                 },
@@ -99,7 +99,7 @@ namespace Eventify.Data
                     Organizer = "Data Science Org.",
                     MaxAttendees = 400,
                     Category = Category.Tech,
-                    ImageUrl = "https://example.com/data-science-fair.jpg",
+                    ImageUrl = "https://datainnovationsummit.com/wp-content/uploads/2023/05/DIS-24-link-preview.jpg",
                     IsOnline = true,
                     TicketLink = "https://datascienceorg.com/data-science-fair-2024"
                 }, 
@@ -114,7 +114,7 @@ namespace Eventify.Data
                     Organizer = "Music Events Inc.",
                     MaxAttendees = 10000,
                     Category = Category.Music,
-                    ImageUrl = "https://example.com/global-music-festival.jpg",
+                    ImageUrl = "https://nationaltoday.com/wp-content/uploads/2022/08/4568086-min.jpg.webp",
                     IsOnline = false,
                     TicketLink = "https://musiceventsinc.com/global-music-festival-2024"
                 },
@@ -128,7 +128,7 @@ namespace Eventify.Data
                     Organizer = "Virtual Concerts Ltd.",
                     MaxAttendees = 20000,
                     Category = Category.Music,
-                    ImageUrl = "https://example.com/virtual-concert.jpg",
+                    ImageUrl = "https://blog.siriusxm.com/wp-content/uploads/2022/02/22-5902_NxtWave_Vol4-1920x1080-1.jpg?w=940",
                     IsOnline = true,
                     TicketLink = "https://virtualconcerts.com/concert-series-2024"
                 },
@@ -142,7 +142,7 @@ namespace Eventify.Data
                     Organizer = "Classical Events",
                     MaxAttendees = 500,
                     Category = Category.Music,
-                    ImageUrl = "https://example.com/classical-music-gala.jpg",
+                    ImageUrl = "https://www.icma-info.com/wp-content/uploads/2023/03/OV-A.-Liebreich.-Foto-Live-Music-Valencia-red.jpg",
                     IsOnline = false,
                     TicketLink = "https://classicalevents.com/music-gala-2024"
                 },
@@ -156,7 +156,7 @@ namespace Eventify.Data
                     Organizer = "Indie Music Ltd.",
                     MaxAttendees = 800,
                     Category = Category.Music,
-                    ImageUrl = "https://example.com/indie-music-showcase.jpg",
+                    ImageUrl = "https://d31fr2pwly4c4s.cloudfront.net/3/b/9/1549401_59b37172_revival-music-festival-weekender-2024_1024.jpg",
                     IsOnline = false,
                     TicketLink = "https://indiemusic.com/showcase-2024"
                 },
@@ -170,7 +170,7 @@ namespace Eventify.Data
                     Organizer = "Rock Events",
                     MaxAttendees = 1500,
                     Category = Category.Music,
-                    ImageUrl = "https://example.com/rock-and-roll-revival.jpg",
+                    ImageUrl = "https://d31fr2pwly4c4s.cloudfront.net/3/b/9/1549401_59b37172_revival-music-festival-weekender-2024_1024.jpg",
                     IsOnline = false,
                     TicketLink = "https://rockevents.com/revival-2024"
                 },
@@ -185,7 +185,7 @@ namespace Eventify.Data
                     Organizer = "Soccer Events Inc.",
                     MaxAttendees = 80000,
                     Category = Category.Sports,
-                    ImageUrl = "https://example.com/global-soccer-championship.jpg",
+                    ImageUrl = "https://digitalhub.fifa.com/transform/b4d0cf3d-795e-438c-9b59-753a030d2e24/Olympics-Paris-2024-Logo",
                     IsOnline = false,
                     TicketLink = "https://soccereventsinc.com/global-championship-2024"
                 },
@@ -199,7 +199,7 @@ namespace Eventify.Data
                     Organizer = "Fitness Events Ltd.",
                     MaxAttendees = 10000,
                     Category = Category.Sports,
-                    ImageUrl = "https://example.com/virtual-fitness-marathon.jpg",
+                    ImageUrl = "https://www.getkidsgoing.com/wp-install/wp-content/uploads/2021/02/virtual-tcs-london-marathon-run-for-get-kids-going-scaled.jpg",
                     IsOnline = true,
                     TicketLink = "https://fitnessevents.com/marathon-2024"
                 },
@@ -213,7 +213,7 @@ namespace Eventify.Data
                     Organizer = "Tennis Events",
                     MaxAttendees = 20000,
                     Category = Category.Sports,
-                    ImageUrl = "https://example.com/international-tennis-open.jpg",
+                    ImageUrl = "https://www.tennistours.com/img/tournament-images/miami-open-index.jpg",
                     IsOnline = false,
                     TicketLink = "https://tennisevents.com/open-2024"
                 },
@@ -227,7 +227,7 @@ namespace Eventify.Data
                     Organizer = "Skateboarding Events Ltd.",
                     MaxAttendees = 5000,
                     Category = Category.Sports,
-                    ImageUrl = "https://example.com/skateboarding-championship.jpg",
+                    ImageUrl = "https://cdn.dmcl.biz/media/image/239182/o/momiji+nishiya.jpg",
                     IsOnline = false,
                     TicketLink = "https://skateboardingevents.com/championship-2024"
                 },
@@ -241,7 +241,7 @@ namespace Eventify.Data
                     Organizer = "Swimming Events",
                     MaxAttendees = 8000,
                     Category = Category.Sports,
-                    ImageUrl = "https://example.com/international-swimming-gala.jpg",
+                    ImageUrl = "https://medias.paris2024.org/uploads/2020/11/1331557859-scaled.jpeg?x-oss-process=image/resize,w_2560,h_1707,m_lfit/format,jpeg",
                     IsOnline = false,
                     TicketLink = "https://swimmingevents.com/gala-2024"
                 },
@@ -256,7 +256,7 @@ namespace Eventify.Data
                     Organizer = "Educational Events Ltd.",
                     MaxAttendees = 10000,
                     Category = Category.FamilyAndEducation,
-                    ImageUrl = "https://example.com/homeschooling-seminar.jpg",
+                    ImageUrl = "https://navsh.org.uk/source/logo.png",
                     IsOnline = true,
                     TicketLink = "https://educationalevents.com/homeschooling-seminar"
                 },
@@ -270,7 +270,7 @@ namespace Eventify.Data
                     Organizer = "Educational Events Inc.",
                     MaxAttendees = 2000,
                     Category = Category.FamilyAndEducation,
-                    ImageUrl = "https://example.com/international-science-fair.jpg",
+                    ImageUrl = "https://www.science-on-stage.eu/sites/default/files/images/ws22024_sons2024_banner_website.png",
                     IsOnline = false,
                     TicketLink = "https://educationaleventsinc.com/science-fair-2024"
                 },
@@ -284,7 +284,7 @@ namespace Eventify.Data
                     Organizer = "Family Events Ltd.",
                     MaxAttendees = 5000,
                     Category = Category.FamilyAndEducation,
-                    ImageUrl = "https://example.com/parenting-workshop.jpg",
+                    ImageUrl = "https://cdn-az.allevents.in/events5/banners/dc4c7886d025f6489c11418c2842bfcc1c620f6b06846a3c5d347df0a9eb13bc-rimg-w1200-h600-gmir.jpg?v=1684632258",
                     IsOnline = true,
                     TicketLink = "https://familyeventsltd.com/workshop-2024"
                 },
@@ -298,7 +298,7 @@ namespace Eventify.Data
                     Organizer = "Art Events Inc.",
                     MaxAttendees = 5000,
                     Category = Category.FamilyAndEducation,
-                    ImageUrl = "https://example.com/art-festival-kids.jpg",
+                    ImageUrl = "https://www.infodesigners.eu/immagine_copia/Art-On-Climate-Illustration-Competition-2023.png",
                     IsOnline = false,
                     TicketLink = "https://arteventsinc.com/festival-kids-2024"
                 },
@@ -312,7 +312,7 @@ namespace Eventify.Data
                     Organizer = "Educational Events",
                     MaxAttendees = 10000,
                     Category = Category.FamilyAndEducation,
-                    ImageUrl = "https://example.com/math-olympiad.jpg",
+                    ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/IMO_logo.svg/1200px-IMO_logo.svg.png",
                     IsOnline = true,
                     TicketLink = "https://educationalevents.com/olympiad-2024"
                 }

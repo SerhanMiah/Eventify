@@ -23,4 +23,19 @@ public class EventsController : ControllerBase
     {
         return await _context.Events.ToListAsync();
     }
+
+    // GET: api/Events/:id
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Event>> GetEvent(int id)
+    {
+        var eventItem = await _context.Events.FindAsync(id);
+
+        if (eventItem == null)
+        {
+            return NotFound();
+        }
+
+        return eventItem;
+    }
 }
+

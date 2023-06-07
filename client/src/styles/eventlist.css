@@ -1,68 +1,72 @@
-/* style.css */
+body {
+    background-color: #F5F5F5;
+}
 
 .container {
-    padding: 2rem;
+    margin-top: 30px;
 }
 
-.event-list-header {
-    text-align: center;
-    color: #333;
-    margin-bottom: 2rem;
+h1 {
+    color: #1F2B42;
+    font-weight: 700;
+    margin-bottom: 20px;
 }
 
-.event-card {
-    margin-bottom: 2rem;
-    border: none;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+.card {
+    border-radius: 15px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.event-card:hover {
-    transform: scale(1.02);
-}
-
-.event-image {
-    width: 100%;
+.card img {
     height: 200px;
     object-fit: cover;
-    border-radius: .25rem;
 }
 
-.event-info {
-    padding: 1rem;
+.card .card-body {
+    background-color: #FFF;
+    padding: 20px;
 }
 
-.event-date {
-    color: #6c757d;
-    margin-bottom: 0.5rem;
-}
-
-.event-title {
-    margin: 0.5rem 0;
-    font-size: 1.25rem;
-    font-weight: 500;
-}
-
-.event-category {
-    display: inline-block;
-    padding: .25em .4em;
-    font-size: 75%;
+.card .card-title {
+    color: #1F2B42;
     font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25rem;
-    background-color: #007bff;
-    color: white;
+    margin-bottom: 10px;
 }
 
-.btn-primary {
-    margin-top: 1rem;
-    background-color: #007bff;
-    border: none;
+.card .card-text {
+    color: #1F2B42;
+    font-size: 14px;
+    margin-bottom: 15px;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
+.card .btn-primary {
+    background-color: #FF6347;
+    border-color: #FF6347;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: all .3s ease;
 }
+
+.card .btn-primary:hover {
+    background-color: #1F2B42;
+    border-color: #1F2B42;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #FF6347;
+    border-color: #FF6347;
+}
+
+.input-group .form-control {
+    border-radius: 50px;
+}
+
+.input-group-text {
+    border-radius: 50px;
+    background-color: #FF6347;
+    color: #FFF;
+    border-color: #FF6347;
+}
+
