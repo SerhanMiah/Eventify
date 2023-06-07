@@ -19,6 +19,7 @@ namespace Eventify.Data
         public DbSet<Ticket> Tickets {get; set;}
         public DbSet<Attendee> Attendees {get; set;}
 
+        public DbSet<ApplicationUser> ApplicationUsers {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
