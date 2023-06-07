@@ -30,7 +30,7 @@ namespace Eventify.Models
         Holiday,
         Government,
         Gaming,
-        Other // In case an event doesn't fit in any other category
+        Other 
     }
 
     public class Event
