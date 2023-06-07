@@ -11,16 +11,16 @@ namespace Eventify.Models
     [Required]
     public int EventId { get; set; } 
 
-    public Event Event { get; set; }  
+    public Event? Event { get; set; }  
 
     [Required]
     [StringLength(50)]
-    public string AttendeeName { get; set; }  
+    public string? AttendeeName { get; set; }  
 
     [Required]
     [EmailAddress]
     [StringLength(50)]
-    public string AttendeeEmail { get; set; }  
+    public string? AttendeeEmail { get; set; }  
 
     [Required]
     [Range(0, 99999.99)]  
@@ -29,9 +29,9 @@ namespace Eventify.Models
     [Required]
     public DateTime PurchaseDate { get; set; } 
 
-    public string ApplicationUserId { get; set; }
+    public string? ApplicationUserId { get; set; }
 
-    public ApplicationUser ApplicationUser { get; set; }
+    public ApplicationUser? ApplicationUser { get; set; }
 }
 
 }

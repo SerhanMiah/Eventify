@@ -40,19 +40,19 @@ namespace Eventify.Models
 
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [StringLength(500)]
-        public string Description { get; set; } 
+        public string? Description { get; set; } 
 
         [Required]
         public DateTime Date { get; set; } 
 
         [StringLength(100)]
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
         [StringLength(100)]
-        public string Organizer { get; set; } 
+        public string? Organizer { get; set; } 
 
         [Required]
         public int MaxAttendees { get; set; } 
@@ -60,7 +60,7 @@ namespace Eventify.Models
         public Category Category { get; set; }
 
         [StringLength(500)]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
@@ -69,10 +69,10 @@ namespace Eventify.Models
         public bool IsOnline { get; set; } // To distinguish between online and physical events
 
         [StringLength(500)]
-        public string TicketLink { get; set; } // External link to buy tickets
+        public string? TicketLink { get; set; } // External link to buy tickets
 
-        public ICollection<Ticket> Tickets { get; set; } // List of tickets associated with this event
+        public ICollection<Ticket>? Tickets { get; set; } // List of tickets associated with this event
 
-        public ICollection<Attendee> Attendees { get; set; } // List of attendees for this event
+        public ICollection<Attendee>? Attendees { get; set; } // List of attendees for this event
     }
 }
