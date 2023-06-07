@@ -15,7 +15,7 @@ const EventsList = () => {
         };
 
         fetchData();
-    }, []); // Passing an empty array as second argument to useEffect makes it run only on initial render
+    }, []); 
 
     return (
         <div>
