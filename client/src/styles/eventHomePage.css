@@ -1,5 +1,6 @@
 .container-fluid, .eventHomePage {
     background-color: #f8f9fa;
+    height: 100vh;
 }
 
 .search-box, .eventHomePage .search-box {
@@ -15,6 +16,8 @@
     transition: 0.3s;
     border-radius: 5px;
     border: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .event-card:hover, .eventHomePage .event-card:hover {
@@ -30,6 +33,11 @@
 
 .event-card .card-body, .eventHomePage .event-card .card-body {
     padding: 15px;
+    flex-grow: 1; /* This will push the footer to the bottom */
+}
+
+.event-card .card-footer {
+    margin-top: auto; /* This will push the footer to the bottom */
 }
 
 .event-card .card-title {
