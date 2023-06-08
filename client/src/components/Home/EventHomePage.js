@@ -2,43 +2,86 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form, Pagination } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import '../../styles/eventHomePage.css';
 
 const EventHomePage = () => {
     const [events, setEvents] = useState([]);
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [eventsPerPage] = useState(10); // You can adjust this number
+    const [eventsPerPage] = useState(6);
+    const [location, setLocation] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [hideSoldOut, setHideSoldOut] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5245/api/events?page=${currentPage}&search=${search}`);
-                setEvents(response.data);
-            } catch (error) {
-                console.error('Error fetching data from server', error);
-            }
-        };
-
-        fetchData();
-    }, [currentPage, search]);
-
-    const onChangeSearch = e => {
-        setSearch(e.target.value);
-        setCurrentPage(1); // Reset to first page when search changes
-    };
-
-    const totalEvents = events.length;
+    // Pagnation 
     const indexOfLastEvent = currentPage * eventsPerPage;
     const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
     const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
 
-    // Change page
-    const paginate = pageNumber => setCurrentPage(pageNumber);
+    const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
 
-    // Get page numbers
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(totalEvents / eventsPerPage); i++) {
-        pageNumbers.push(i);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+          try {
+            const response = await axios.get('http://localhost:5245/api/events');
+            setEvents(response.data);
+          } catch (error) {
+            console.error('Error fetching events from server', error);
+          }
+        };
+      
+        const fetchCategories = async () => {
+          try {
+            const response = await axios.get('http://localhost:5245/api/categories');
+            setCategories(response.data);
+          } catch (error) {
+            console.error('Error fetching categories from server', error);
+          }
+        };
+      
+        fetchEvents();
+        fetchCategories();
+      }, []);
+    
+
+    const handleLocationChange = (e) => {
+        setLocation(e.target.value);
+        setCurrentPage(1); 
+    };
+
+    const handleCategoryChange = (e) => {
+        setCategories(e.target.value);
+        setCurrentPage(1); 
+    }
+
+    const handleHideSoldOutChange = (e) => {
+        setHideSoldOut(e.target.checked);
+        setCurrentPage(1); 
+    };
+
+    const filteredEvents = events.filter(event => 
+        event.name.toLowerCase().includes(search.toLowerCase()) &&
+        (!location || event.location.toLowerCase().includes(location.toLowerCase())) &&
+        (!categories || event.categories === categories) &&
+        (!hideSoldOut || !event.soldOut) 
+    );
+
+    
+
+    const handleSearchChange = e => {
+        setSearch(e.target.value);
+        setCurrentPage(1); 
+        
+    };
+
+    let items = [];
+    for (let number = 1; number <= totalPages; number++) {
+        items.push(
+            <Pagination.Item key={number} active={number === currentPage} onClick={() => setCurrentPage(number)}>
+                {number}
+            </Pagination.Item>
+        );
     }
 
     return (
@@ -49,19 +92,74 @@ const EventHomePage = () => {
                 </Col>
             </Row>
             <Row>
-                <Col xs={12}>
-                    <Form.Control
-                        type="text"
-                        placeholder="Search for event..."
-                        value={search}
-                        onChange={onChangeSearch}
-                    />
-                </Col>
+            <Col xs={12} className="search-box">
+                <Card>
+                <Card.Body>
+                    <Form>
+                    <Row>
+                        <Col md={3}>
+                        <Form.Group controlId="searchEvent">
+                            <Form.Label>Event</Form.Label>
+                            <Form.Control
+                            type="text"
+                            placeholder="Search for event..."
+                            value={search}
+                            onChange={handleSearchChange}
+                            />
+                        </Form.Group>
+                        </Col>
+
+                        <Col md={3}>
+                        <Form.Group controlId="location">
+                            <Form.Label>Location</Form.Label>
+                            <Form.Control
+                            type="text"
+                            placeholder="City or postcode"
+                            value={location}
+                            onChange={handleLocationChange}
+                            />
+                        </Form.Group>
+                        </Col>
+
+                        <Col md={3}>
+                        <Form.Group controlId="category">
+                            <Form.Label>Category</Form.Label>
+                            <Form.Control
+                                as="select"
+                                value={categories}
+                                onChange={handleCategoryChange}
+                            >
+                                <option value="">Select category...</option>
+                                {categories.map((categoryItem) => (
+                                    <option key={categoryItem.id} value={categoryItem.name}>
+                                        {categoryItem.name}
+                                    </option>
+                                ))}
+                            </Form.Control>
+                        </Form.Group>
+                        </Col>
+
+                        <Col md={3} className="d-flex align-items-center">
+                        <Form.Group controlId="hideSoldOut" className="mb-0">
+                            <Form.Check 
+                            type="checkbox" 
+                            label="Hide sold out events" 
+                            checked={hideSoldOut} 
+                            onChange={handleHideSoldOutChange} 
+                            />
+                        </Form.Group>
+                        </Col>
+                    </Row>
+                    </Form>
+                </Card.Body>
+                </Card>
+            </Col>
             </Row>
+
             <Row>
-                {currentEvents.map(event => (
-                    <Col xs={12} md={6} lg={4} key={event.id} className="mb-4">
-                        <Card>
+                {filteredEvents.map(event => (
+                    <Col xs={12} sm={6} md={4} lg={3} key={event.id} className="mb-4">
+                        <Card className="event-card">
                             <Card.Img variant="top" src={event.imageUrl} />
                             <Card.Body>
                                 <Card.Title>{event.name}</Card.Title>
@@ -80,13 +178,7 @@ const EventHomePage = () => {
             </Row>
             <Row>
                 <Col xs={12}>
-                    <Pagination>
-                        {pageNumbers.map(number => (
-                            <Pagination.Item key={number} active={number === currentPage} onClick={() => paginate(number)}>
-                                {number}
-                            </Pagination.Item>
-                        ))}
-                    </Pagination>
+                    <Pagination>{items}</Pagination>
                 </Col>
             </Row>
         </Container>

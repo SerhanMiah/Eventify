@@ -39,6 +39,27 @@ public class EventsController : ControllerBase
         return eventItem;
     }
 
+    // GET: api/Events/category/:category
+        [HttpGet("category/{category}")]
+    public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCategory(string category)
+    {
+        if (Enum.TryParse(category, out Category categoryEnum))
+        {
+            var events = await _context.Events.Where(e => e.Category == categoryEnum).ToListAsync();
+
+            if (!events.Any())
+            {
+                return NotFound();
+            }
+
+            return events;
+        }
+        else 
+        {
+            return BadRequest("Invalid category.");
+        }
+    }
+
     // POST: api/Events
     [HttpPost]
     [Authorize(Roles = "Admin")]

@@ -1,12 +1,23 @@
+/* NavigationBar.css */
+
 .navbar {
-    background-color: #f8f9fa;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+    background-color: #333;
 }
 
-.navbar a {
-    color: #333;
+.navbar .nav-link {
+    color: #fff;
+    padding: 0.5rem 1rem;
 }
 
-.navbar a:hover {
-    color: #007bff;
+.navbar .nav-link:hover {
+    color: #ccc;
+}
+
+.navbar .navbar-brand {
+    color: #ff7200;
+    font-size: 1.5rem;
+}
+
+.navbar .navbar-brand:hover {
+    color: #ff7200;
 }
