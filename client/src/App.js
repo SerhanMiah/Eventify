@@ -6,6 +6,8 @@ import EventHomePage from './components/Home/EventHomePage';
 import EventsList from './components/EventsList';
 import EventDetail from './components/EventDetail';
 import NavigationBar from './components/Navigation/NavigationBar';
+import RegisterPage from './components/Authorization/RegisterPage';
+import LoginPage from './components/Authorization/LoginPage';
 
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
           <Route path='/' element={<EventHomePage />} />
           <Route path='/events' element={<EventsList />} />
           <Route path="/events/:id" element={<EventDetail />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
     </Router>

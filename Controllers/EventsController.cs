@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Eventify.Data;
 using Eventify.Models;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -36,6 +37,22 @@ public class EventsController : ControllerBase
         }
 
         return eventItem;
+    }
+
+    // POST: api/Events
+    [HttpPost]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<Event>> PostEvent(Event newEvent)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        _context.Events.Add(newEvent);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetEvent), new { id = newEvent.Id }, newEvent);
     }
 }
 
