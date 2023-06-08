@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form, Pagination } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faMapMarkerAlt, faTags, faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import '../../styles/eventHomePage.css';
 
@@ -12,38 +14,42 @@ const EventHomePage = () => {
     const [location, setLocation] = useState('');
     const [categories, setCategories] = useState([]);
     const [hideSoldOut, setHideSoldOut] = useState(false);
-
-    // Pagnation 
-    const indexOfLastEvent = currentPage * eventsPerPage;
-    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-    const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
-
-    const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
-
+    const [currentEvents, setCurrentEvents] = useState([]);
 
     useEffect(() => {
         const fetchEvents = async () => {
-          try {
-            const response = await axios.get('http://localhost:5245/api/events');
-            setEvents(response.data);
-          } catch (error) {
-            console.error('Error fetching events from server', error);
-          }
+            try {
+                const response = await axios.get('http://localhost:5245/api/events');
+                setEvents(response.data);
+                setCurrentEvents(response.data);
+            } catch (error) {
+                console.error('Error fetching events from server', error);
+            }
         };
-      
+
         const fetchCategories = async () => {
-          try {
-            const response = await axios.get('http://localhost:5245/api/categories');
-            setCategories(response.data);
-          } catch (error) {
-            console.error('Error fetching categories from server', error);
-          }
+            try {
+                const response = await axios.get('http://localhost:5245/api/categories');
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories from server', error);
+            }
         };
-      
+
         fetchEvents();
         fetchCategories();
-      }, []);
-    
+    }, []);
+
+    useEffect(() => {
+        const filtered = events.filter(event => 
+            event.name.toLowerCase().includes(search.toLowerCase()) &&
+            (!location || event.location.toLowerCase().includes(location.toLowerCase())) &&
+            (!categories || event.categories.some(category => category.name === categories)) &&
+            (!hideSoldOut || !event.soldOut)
+        );
+
+        setCurrentEvents(filtered);
+    }, [search, location, categories, hideSoldOut]);
 
     const handleLocationChange = (e) => {
         setLocation(e.target.value);
@@ -53,26 +59,22 @@ const EventHomePage = () => {
     const handleCategoryChange = (e) => {
         setCategories(e.target.value);
         setCurrentPage(1); 
-    }
+    };
 
     const handleHideSoldOutChange = (e) => {
         setHideSoldOut(e.target.checked);
         setCurrentPage(1); 
     };
 
-    const filteredEvents = events.filter(event => 
-        event.name.toLowerCase().includes(search.toLowerCase()) &&
-        (!location || event.location.toLowerCase().includes(location.toLowerCase())) &&
-        (!categories || event.categories === categories) &&
-        (!hideSoldOut || !event.soldOut) 
-    );
-
+    const indexOfLastEvent = currentPage * eventsPerPage;
+    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+    const currentDisplayEvents = currentEvents.slice(indexOfFirstEvent, indexOfLastEvent);
     
+    const totalPages = Math.ceil(currentEvents.length / eventsPerPage);
 
     const handleSearchChange = e => {
         setSearch(e.target.value);
         setCurrentPage(1); 
-        
     };
 
     let items = [];
@@ -84,8 +86,9 @@ const EventHomePage = () => {
         );
     }
 
+
     return (
-        <Container fluid>
+        <Container fluid className="eventHomePage">
             <Row className="justify-content-md-center mb-3">
                 <Col md="auto">
                     <h1>Home Page</h1>
@@ -98,66 +101,66 @@ const EventHomePage = () => {
                     <Form>
                     <Row>
                         <Col md={3}>
-                        <Form.Group controlId="searchEvent">
-                            <Form.Label>Event</Form.Label>
-                            <Form.Control
-                            type="text"
-                            placeholder="Search for event..."
-                            value={search}
-                            onChange={handleSearchChange}
-                            />
-                        </Form.Group>
+                            <Form.Group controlId="searchEvent">
+                                <Form.Label><FontAwesomeIcon icon={faSearch} /> Event</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Search for event..."
+                                    value={search}
+                                    onChange={handleSearchChange}
+                                />
+                            </Form.Group>
                         </Col>
 
                         <Col md={3}>
-                        <Form.Group controlId="location">
-                            <Form.Label>Location</Form.Label>
-                            <Form.Control
-                            type="text"
-                            placeholder="City or postcode"
-                            value={location}
-                            onChange={handleLocationChange}
-                            />
-                        </Form.Group>
+                            <Form.Group controlId="location">
+                                <Form.Label><FontAwesomeIcon icon={faMapMarkerAlt} /> Location</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="City or postcode"
+                                    value={location}
+                                    onChange={handleLocationChange}
+                                />
+                            </Form.Group>
                         </Col>
 
                         <Col md={3}>
-                        <Form.Group controlId="category">
-                            <Form.Label>Category</Form.Label>
-                            <Form.Control
-                                as="select"
-                                value={categories}
-                                onChange={handleCategoryChange}
-                            >
-                                <option value="">Select category...</option>
-                                {categories.map((categoryItem) => (
-                                    <option key={categoryItem.id} value={categoryItem.name}>
-                                        {categoryItem.name}
-                                    </option>
-                                ))}
-                            </Form.Control>
-                        </Form.Group>
+                            <Form.Group controlId="category">
+                                <Form.Label><FontAwesomeIcon icon={faTags} /> Category</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    value={categories}
+                                    onChange={handleCategoryChange}
+                                >
+                                    <option value="">Select category...</option>
+                                    {categories.map((categoryItem) => (
+                                        <option key={categoryItem.id} value={categoryItem.name}>
+                                            {categoryItem.name}
+                                        </option>
+                                    ))}
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
 
                         <Col md={3} className="d-flex align-items-center">
-                        <Form.Group controlId="hideSoldOut" className="mb-0">
-                            <Form.Check 
-                            type="checkbox" 
-                            label="Hide sold out events" 
-                            checked={hideSoldOut} 
-                            onChange={handleHideSoldOutChange} 
-                            />
-                        </Form.Group>
+                            <Form.Group controlId="hideSoldOut" className="mb-0">
+                                <Form.Check 
+                                    type="checkbox" 
+                                    label={<><FontAwesomeIcon icon={faTicketAlt} /> Hide sold out events</>} 
+                                    checked={hideSoldOut} 
+                                    onChange={handleHideSoldOutChange} 
+                                />
+                            </Form.Group>
                         </Col>
                     </Row>
-                    </Form>
+                </Form>
                 </Card.Body>
                 </Card>
             </Col>
             </Row>
 
             <Row>
-                {filteredEvents.map(event => (
+                {currentDisplayEvents.map(event => (
                     <Col xs={12} sm={6} md={4} lg={3} key={event.id} className="mb-4">
                         <Card className="event-card">
                             <Card.Img variant="top" src={event.imageUrl} />

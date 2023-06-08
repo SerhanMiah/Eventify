@@ -17,7 +17,7 @@ function App() {
         <NavigationBar />
         <Routes>
           <Route path='/' element={<EventHomePage />} />
-          <Route path='/events' element={<EventsList />} />
+          {/* <Route path='/events' element={<EventsList />} /> */}
           <Route path="/events/:id" element={<EventDetail />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
