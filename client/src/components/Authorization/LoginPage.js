@@ -1,38 +1,78 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/login.css';
+import { useNavigate } from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import axios from 'axios'
+
 const LoginPage = () => {
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate() 
+
+  const [ loginData, setLoginData ] = useState({
     email: '',
     password: '',
-  });
+  })
+  const [ errors, setErrors ] = useState(false)
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChange = (event) => {
+    setLoginData({ ...loginData, [event.target.name]: event.target.value  })
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = async (event) => {
+    event.preventDefault()
+    try {
+      const { data } = await axios.post('api/auth/login/', loginData)
+      console.log(data)
     
-  };
+      navigate('/theatre')
+    } catch (error) {
+      setErrors(error.message)
+      console.log(error.message)
+    }
+  }
 
   return (
-    <div className="login-container">
-    <form className="login-form" onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-        </label>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
+    <main className='form-login'>
+      <Container>
+        <Row className="justify-content-md-center">
+          <Col xs={12} md={8} lg={6}>
+            <div className="login-panel">
+              <h1>Login</h1>
+              <Form onSubmit={onSubmit} className='login-form'>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control type='email' name='email' placeholder='Enter email' onChange={handleChange} value={loginData.email} />   
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} value={loginData.password} />
+                </Form.Group>
+
+                <Button variant="primary" type="submit" block>
+                  Submit
+                </Button>
+
+                {errors && <div className='error'>{errors}</div>}
+
+                <div className="mt-3">
+                  <Link to="/forgot-password">Forgot password?</Link>
+                </div>
+
+                <div className="mt-2">
+                  Don't have an account? <Link to="/register">Register</Link>
+                </div>
+              </Form>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </main>     
+  )
 };
 
 export default LoginPage;

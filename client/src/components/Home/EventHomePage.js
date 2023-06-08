@@ -89,11 +89,11 @@ const EventHomePage = () => {
 
     return (
         <Container fluid className="eventHomePage">
-            <Row className="justify-content-md-center mb-3">
+            {/* <Row className="justify-content-md-center mb-3">
                 <Col md="auto">
                     <h1>Home Page</h1>
                 </Col>
-            </Row>
+            </Row> */}
             <Row>
             <Col xs={12} className="search-box">
                 <Card>

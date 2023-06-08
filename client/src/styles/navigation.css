@@ -1,23 +1,50 @@
-/* NavigationBar.css */
+/* navigation.css */
 
-.navbar {
+.navigation {
+    width: 100%;
+}
+
+.navigation .navbar-top {
     background-color: #333;
+    padding: 0.5rem 0;
 }
 
-.navbar .nav-link {
-    color: #fff;
-    padding: 0.5rem 1rem;
-}
-
-.navbar .nav-link:hover {
-    color: #ccc;
-}
-
-.navbar .navbar-brand {
+.navigation .navbar-top .navbar-brand {
     color: #ff7200;
     font-size: 1.5rem;
 }
 
-.navbar .navbar-brand:hover {
+.navigation .navbar-top .navbar-brand:hover {
     color: #ff7200;
+}
+
+.navigation .navbar-top .nav-link {
+    color: #fff;
+    padding: 0.5rem 1rem;
+}
+
+.navigation .navbar-top .nav-link:hover {
+    color: #ccc;
+}
+
+.navigation .navbar-bottom {
+    background-color: #222;
+    padding: 0.5rem 0;
+}
+
+.navigation .navbar-bottom .dropdown-menu {
+    background-color: #333;
+}
+
+.navigation .navbar-bottom .dropdown-menu .dropdown-item {
+    color: #fff;
+}
+
+.navigation .navbar-bottom .dropdown-menu .dropdown-item:hover {
+    color: #ccc;
+    background-color: transparent;
+}
+
+.navigation .navbar-bottom .nav-link .faUser {
+    margin-right: 0.5rem;
 }

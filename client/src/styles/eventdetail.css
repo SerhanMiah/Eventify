@@ -1,45 +1,62 @@
 /* eventdetail.css */
 
 .event-detail-container {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 2rem;
 }
 
 .event-title {
-    font-weight: bold;
-    font-size: 2em;
-    margin-bottom: 15px;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.badge {
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
 }
 
 .event-image {
     width: 100%;
     height: auto;
-    margin-bottom: 15px;
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
 }
 
 .event-description {
-    font-size: 1.1em;
+    font-size: 1.2rem;
+    color: #666;
     line-height: 1.5;
-    margin-bottom: 15px;
+    margin-bottom: 2rem;
 }
 
-.event-info-card {
-    margin-top: 20px;
-    padding: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+.event-info-card, .event-organizer-card {
+    margin-bottom: 1.5rem;
+    border: none;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(90,97,105,.1), 0 0.9375rem 1.40625rem rgba(90,97,105,.1), 0 0.25rem 0.53125rem rgba(90,97,105,.12), 0 0.125rem 0.1875rem rgba(90,97,105,.1);
 }
 
-.event-info-card .card-title {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    font-weight: bold;
+.event-info-card .card-title, .event-organizer-card .card-title {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
 }
 
-.event-info-card .card-text {
-    margin-bottom: 15px;
+.event-info-card .card-text, .event-organizer-card .card-text {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 1rem;
 }
 
-.event-info-card .btn {
-    background-color: #ff9b21;  /* Or any color you want */
-    color: white;
+.btn-primary {
+    background-color: #ff7200;
+    border-color: #ff7200;
+}
+
+.btn-primary:hover {
+    background-color: #ff5200;
+    border-color: #ff5200;
 }

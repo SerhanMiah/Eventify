@@ -8,7 +8,7 @@ import EventDetail from './components/EventDetail';
 import NavigationBar from './components/Navigation/NavigationBar';
 import RegisterPage from './components/Authorization/RegisterPage';
 import LoginPage from './components/Authorization/LoginPage';
-
+import Footer from './components/Navigation/Footer';
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }

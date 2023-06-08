@@ -28,6 +28,20 @@ namespace Eventify.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegistrationDto userRegistrationDto)
         {
+            var existingUser = await _userManager.FindByEmailAsync(userRegistrationDto.Email);
+
+            if (existingUser != null)
+            {
+                return BadRequest(new { Message = "User with this email already exists." });
+            }
+
+            existingUser = await _userManager.FindByNameAsync(userRegistrationDto.Username);
+
+            if (existingUser != null)
+            {
+                return BadRequest(new { Message = "User with this username already exists." });
+            }
+
             var user = new ApplicationUser { UserName = userRegistrationDto.Username, Email = userRegistrationDto.Email };
             var result = await _userManager.CreateAsync(user, userRegistrationDto.Password);
 
@@ -40,6 +54,7 @@ namespace Eventify.Controllers
                 return BadRequest(result.Errors);
             }
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserLoginDto userLoginDto)
