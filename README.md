@@ -29,6 +29,8 @@ Eventify is a versatile event management application meticulously engineered to 
 ### Phase 1 - (Planning):
 
 
+
+
 ### Phase 2 Making the Model, Schema and Connection to SQL:
 
 

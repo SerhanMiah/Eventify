@@ -31,6 +31,11 @@ namespace Eventify.Data
                 .Property(t => t.Price)
                 .HasPrecision(18, 2);
 
+            modelBuilder
+                .Entity<Event>()
+                .Property(e => e.Category)
+                .HasConversion<string>();
+
             // Seeding Data - Events
            modelBuilder.Entity<Event>().HasData(
                 new Event

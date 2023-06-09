@@ -25,10 +25,10 @@ const LoginPage = () => {
   const onSubmit = async (event) => {
     event.preventDefault()
     try {
-      const { data } = await axios.post('api/auth/login/', loginData)
+      const { data } = await axios.post('http://localhost:5245/api/auth/login', loginData)
       console.log(data)
     
-      navigate('/theatre')
+      navigate('/')
     } catch (error) {
       setErrors(error.message)
       console.log(error.message)

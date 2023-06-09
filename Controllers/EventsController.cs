@@ -39,25 +39,26 @@ public class EventsController : ControllerBase
         return eventItem;
     }
 
-    // GET: api/Events/category/:category
-        [HttpGet("category/{category}")]
-    public async Task<ActionResult<IEnumerable<Event>>> GetEventsByCategory(string category)
+    // GET: api/Events/online
+    [HttpGet("online")]
+    public async Task<ActionResult<IEnumerable<Event>>> GetOnlineEvents()
     {
-        if (Enum.TryParse(category, out Category categoryEnum))
-        {
-            var events = await _context.Events.Where(e => e.Category == categoryEnum).ToListAsync();
+        var onlineEvents = await _context.Events.Where(e => e.IsOnline).ToListAsync();
 
-            if (!events.Any())
-            {
-                return NotFound();
-            }
-
-            return events;
-        }
-        else 
+        if (!onlineEvents.Any())
         {
-            return BadRequest("Invalid category.");
+            return NotFound();
         }
+
+        return onlineEvents;
+    }
+
+
+    [HttpGet("categories")]
+    public ActionResult<IEnumerable<string>> GetCategories()
+    {
+        var categories = Enum.GetNames(typeof(Category));
+        return Ok(categories);
     }
 
     // POST: api/Events

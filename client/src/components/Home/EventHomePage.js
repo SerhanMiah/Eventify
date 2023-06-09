@@ -13,8 +13,11 @@ const EventHomePage = () => {
     const [eventsPerPage] = useState(6);
     const [location, setLocation] = useState('');
     const [categories, setCategories] = useState([]);
-    const [hideSoldOut, setHideSoldOut] = useState(false);
+    const [IsOnline, setIsOnline] = useState(false);
     const [currentEvents, setCurrentEvents] = useState([]);
+
+    const [selectedCategory, setSelectedCategory] = useState(''); // add this line
+    const [allCategories, setAllCategories] = useState([]);
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -29,27 +32,42 @@ const EventHomePage = () => {
 
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5245/api/categories');
-                setCategories(response.data);
+                const response = await axios.get('http://localhost:5245/api/categories'); // adjust this URL
+                setAllCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories from server', error);
             }
         };
+    
+
+        const fetchOnlineEvents = async () => {
+            try {
+                const response = await axios.get('http://localhost:5245/api/events/online');
+                setEvents(response.data);
+                setCurrentEvents(response.data);
+            } catch (error) {
+                console.error('Error fetching online events from server', error);
+            }
+        };
+        
 
         fetchEvents();
         fetchCategories();
+        fetchOnlineEvents();
     }, []);
 
     useEffect(() => {
-        const filtered = events.filter(event => 
+        const filtered = events.filter(event =>
             event.name.toLowerCase().includes(search.toLowerCase()) &&
             (!location || event.location.toLowerCase().includes(location.toLowerCase())) &&
-            (!categories || event.categories.some(category => category.name === categories)) &&
-            (!hideSoldOut || !event.soldOut)
+            (!selectedCategory || (event.category === selectedCategory)) && 
+            (IsOnline ? event.isOnline : true)
         );
-
         setCurrentEvents(filtered);
-    }, [search, location, categories, hideSoldOut]);
+    }, [search, location, selectedCategory, IsOnline]);
+    
+    
+    
 
     const handleLocationChange = (e) => {
         setLocation(e.target.value);
@@ -57,14 +75,16 @@ const EventHomePage = () => {
     };
 
     const handleCategoryChange = (e) => {
-        setCategories(e.target.value);
-        setCurrentPage(1); 
+        setSelectedCategory(e.target.value); 
+        setCurrentPage(1);
     };
+    
 
-    const handleHideSoldOutChange = (e) => {
-        setHideSoldOut(e.target.checked);
+    const handleIsOnlineChange = (e) => {
+        setIsOnline(e.target.checked);
         setCurrentPage(1); 
     };
+    
 
     const indexOfLastEvent = currentPage * eventsPerPage;
     const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
@@ -129,26 +149,27 @@ const EventHomePage = () => {
                                 <Form.Label><FontAwesomeIcon icon={faTags} /> Category</Form.Label>
                                 <Form.Control
                                     as="select"
-                                    value={categories}
+                                    value={selectedCategory}
                                     onChange={handleCategoryChange}
                                 >
                                     <option value="">Select category...</option>
-                                    {categories.map((categoryItem) => (
+                                    {allCategories.map((categoryItem) => (
                                         <option key={categoryItem.id} value={categoryItem.name}>
                                             {categoryItem.name}
                                         </option>
                                     ))}
                                 </Form.Control>
+
                             </Form.Group>
                         </Col>
 
                         <Col md={3} className="d-flex align-items-center">
-                            <Form.Group controlId="hideSoldOut" className="mb-0">
-                                <Form.Check 
+                            <Form.Group controlId="IsOnline" className="mb-0">
+                            <Form.Check 
                                     type="checkbox" 
-                                    label={<><FontAwesomeIcon icon={faTicketAlt} /> Hide sold out events</>} 
-                                    checked={hideSoldOut} 
-                                    onChange={handleHideSoldOutChange} 
+                                    label={<><FontAwesomeIcon icon={faTicketAlt} /> Is Online?</>} 
+                                    checked={IsOnline} 
+                                    onChange={handleIsOnlineChange} 
                                 />
                             </Form.Group>
                         </Col>
