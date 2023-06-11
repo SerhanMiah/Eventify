@@ -24,13 +24,15 @@ namespace Eventify.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ApplicationUser>> GetUser(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = 
             }
-
-            return user;
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
         }
     }
 

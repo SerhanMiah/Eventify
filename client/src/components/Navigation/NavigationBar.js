@@ -4,9 +4,13 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { userIsAuthenticated } from '../helpers/auth';
+import { useParams } from 'react-router-dom';
+
+
 
 const NavigationBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(userIsAuthenticated());
+  const { userId } = useParams()
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -18,6 +22,8 @@ const NavigationBar = () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
+  
+
   
 
   const handleLogOut = () => {
@@ -43,12 +49,18 @@ const NavigationBar = () => {
               { isAuthenticated
                   ?
                   <>
-                      <NavDropdown title="Account" id="basic-nav-dropdown">
-                          <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-                          <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
-                          <NavDropdown.Divider />
-                          <NavDropdown.Item onClick={handleLogOut}>Logout</NavDropdown.Item>
-                      </NavDropdown>
+                    <NavDropdown title="Account" id="basic-nav-dropdown">
+                    <LinkContainer to={`/profile/${userId}`}>
+                      <Nav.Link>Profile</Nav.Link>
+                  </LinkContainer>
+
+                    <LinkContainer to={`/profile/${userId}/settings`}>
+                      <NavDropdown.Item>Settings</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item onClick={handleLogOut}>Logout</NavDropdown.Item>
+                  </NavDropdown>
+
                   </>
                   :
                   <>
