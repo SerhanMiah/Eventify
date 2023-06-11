@@ -27,10 +27,11 @@ export const getPayLoad = () => {
 
 export const userIsAuthenticated = () => {
   const payload = getPayLoad()
-  if (!payload) return 
+  if (!payload) return false
   const currentTime = Math.round(Date.now() / 1000) 
   return currentTime < payload.exp
 }
+
 
 export const userIsOwner = (item) => {
   const payload = getPayLoad()
