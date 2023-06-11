@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Eventify.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Eventify.Controllers
 {
@@ -21,19 +17,30 @@ namespace Eventify.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ApplicationUser>> GetUser(string id)
+       [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUser(string userId)
         {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("Invalid user ID.");
+            }
+
             try
             {
-                var user = 
+                var user = await _userManager.FindByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                return Ok(user); // Return the user object as a response
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                
-                throw;
+                return StatusCode(500, $"An error occurred while processing your request: {ex.Message}");
             }
         }
-    }
 
+    }
 }

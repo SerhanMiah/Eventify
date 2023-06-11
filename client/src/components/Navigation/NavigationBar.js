@@ -1,84 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+// import { LinkContainer } from 'react-router-bootstrap';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { userIsAuthenticated } from '../helpers/auth';
-import { useParams } from 'react-router-dom';
 
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
-
-const NavigationBar = () => {
+const NavigationBar = ({userId}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(userIsAuthenticated());
-  const { userId } = useParams()
 
   useEffect(() => {
     const handleStorageChange = () => {
       setIsAuthenticated(userIsAuthenticated());
     };
-  
+
     window.addEventListener('storage', handleStorageChange);
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
-  
-
-  
 
   const handleLogOut = () => {
-      console.log("Logging out...");
-      window.localStorage.removeItem('local-user-Token');
-      setIsAuthenticated(false);
+    console.log('Logging out...');
+    window.localStorage.removeItem('local-user-Token');
+    setIsAuthenticated(false);
   };
 
   return (
-    <div className="navigation">
-      <div className="navbar-top">
-        <Navbar bg="dark" variant="dark" expand="lg">
-          <Container>
-            <LinkContainer to="/">
-              <Navbar.Brand>Eventify</Navbar.Brand>
-            </LinkContainer>
-            <Navbar.Toggle aria-controls="main-navbar-nav" />
-            <Navbar.Collapse id="main-navbar-nav" className="justify-content-center">
-              <Nav className="me-auto">
-              {/* Add more links if need be */}
-              </Nav>
-              <Nav className="ml-auto">
-              { isAuthenticated
-                  ?
-                  <>
-                    <NavDropdown title="Account" id="basic-nav-dropdown">
-                    <LinkContainer to={`/profile/${userId}`}>
-                      <Nav.Link>Profile</Nav.Link>
-                  </LinkContainer>
+    <Nav variant="tabs" defaultActiveKey="/home">
+      <Nav.Item>
+        <Nav.Link style={{ textDecoration: 'none', color: 'black', padding: '10px, 30px' }} as={Link} to='/' >Home</Nav.Link> 
+      </Nav.Item>
+      
+      <Nav.Item>
+        <Nav.Link style={{ textDecoration: 'none', color: 'black', padding: '10px, 30px' }} as={Link} to='/theatre' >All theatre</Nav.Link>
+      </Nav.Item>
 
-                    <LinkContainer to={`/profile/${userId}/settings`}>
-                      <NavDropdown.Item>Settings</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={handleLogOut}>Logout</NavDropdown.Item>
-                  </NavDropdown>
+     
 
-                  </>
-                  :
-                  <>
-                      <LinkContainer to="/register">
-                          <Nav.Link><FontAwesomeIcon icon={faUser} /> Register</Nav.Link>
-                      </LinkContainer>
-                      <LinkContainer to="/login">
-                          <Nav.Link><FontAwesomeIcon icon={faUser} /> Login</Nav.Link>
-                      </LinkContainer>
-                  </>
-              }
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </div>
-    </div>
-  );
-};
+     
+      { userIsAuthenticated()
+        ?
+        <>
+          <Nav.Item>
+            <Nav.Link style={{ textDecoration: 'none', color: 'black', padding: '10px, 30px' }} as={Link} to='/profile/' >User Profile</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link style={{ textDecoration: 'none', color: 'black', padding: '10px, 30px' }}  onClick={handleLogOut}>Logout</Nav.Link>
+          </Nav.Item>
+        </>
+        :
+        <>
+          <Nav.Item>
+            <Nav.Link style={{ textDecoration: 'none', color: 'black', padding: '10px, 30px' }} as={Link} to='/register'>Register</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link style={{ textDecoration: 'none', color: 'black', padding: '10px, 30px' }} as={Link} to='/login'>Login</Nav.Link>
+          </Nav.Item>
+        </>      
+      }      
+    </Nav>
+  )
+}
 
 export default NavigationBar;
