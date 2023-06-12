@@ -1,16 +1,19 @@
-import '../../styles/footer.css'
+import React from 'react';
+import '../../styles/footer.css';
 
 const Footer = () => {
-
-    return (
-      <div className="footer-container">
-        <div className="footer shadow p-3">
+  return (
+    <footer className="footer-container bg-light mt-auto py-3 text-center">
+      <div className="container">
+        <span className="text-muted">
           Created by: 
-          <a className="gitLink" href="https://github.com/SerhanMiah" target="_blank" rel="noreferrer" > <i className="fa-brands fa-github"></i> Serhan Miah </a>
-        </div>
+          <a className="gitLink text-info ml-2" href="https://github.com/SerhanMiah" target="_blank" rel="noreferrer">
+            <i className="fab fa-github"></i> Serhan Miah
+          </a>
+        </span>
       </div>
-  
-    )
-  }
-  
-  export default Footer
+    </footer>
+  );
+};
+
+export default Footer;

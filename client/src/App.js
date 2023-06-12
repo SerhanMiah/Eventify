@@ -6,8 +6,10 @@ import Register from './components/Authorization/RegisterPage';
 import Footer from './components/Navigation/Footer';
 import EventHomePage from './components/Home/EventHomePage'
 import ProfilePage from './components/Authorization/UserProfile';
+import EventDetail from './components/EventDetail';
 
 import { userIsAuthenticated, getId } from './components/helpers/auth';
+import CreateEventForm from './components/Event/CreateEventForm';
 
 function App() {
   const [userId, setUserId] = useState(getId());
@@ -36,8 +38,12 @@ function App() {
           <Route path="/" element={<EventHomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile/:userId" element={<ProfilePage />} />
           <Route path='/profile/' element={<ProfilePage  />} />
+          <Route path="/profile/:userId" component={ProfilePage} />
+
+
+          <Route path='/events/:id' element={<EventDetail  />} />
+          <Route path='/events/createEvent' element={<CreateEventForm  />} />
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
         <Footer />

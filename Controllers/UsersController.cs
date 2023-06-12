@@ -18,6 +18,7 @@ namespace Eventify.Controllers
         }
 
        [HttpGet("{userId}")]
+
         public async Task<IActionResult> GetUser(string userId)
         {
             if (string.IsNullOrEmpty(userId))

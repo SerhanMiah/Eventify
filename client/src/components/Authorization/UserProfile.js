@@ -7,57 +7,68 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getUserIdFromToken, getId } from '../helpers/auth.js';
+
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const { userId } = useParams();
+  const [user, setUser] = useState(null);
+  const userId = getUserIdFromToken();
+
   
   const [userProfile, setUserProfile] = useState(null);
   const [errors, setErrors] = useState(false);
   const [updatedUserProfile, setUpdatedUserProfile] = useState('');
 
-  const getProfile = async () => {
+  async function fetchUser() {
+    const userId = getId();  // get userId from local storage
+    if (!userId) {
+      console.log('User id is undefined');
+      return;
+    }
+  
     try {
-      const { data } = await axios.get(`http://localhost:5245/api/users/${userId}`,  {
+      const response = await axios.get(`http://localhost:5245/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${getToken()}` },
       });
       
-      setUserProfile(data);
-      setUpdatedUserProfile(data);
+      if (response.status === 200) {
+        setUser(response.data); // update the user state with the fetched user data
+      }
     } catch (error) {
-      console.error(error);
-      setErrors(true);
+      console.log('Error fetching user:', error);
     }
-  };
-
+  }
   useEffect(() => {
-    getProfile();
+    fetchUser();
   }, []);
+  
 
   return (
     <Container as='main' className='Profile-page'>
       <div className='display'>
-        {userProfile ? (
-          <div className="container">
-            <div className="fb-profile">
-              <Card.Img align="left" className="fb-image-profile thumbnail"  src={userProfile.profile_image} alt={userProfile.username} />
-              <div className="fb-profile-text">
-                <Card.Body>
-                  <Card.Title><h1> HI, {userProfile.FirstName}</h1></Card.Title>
-                  <Card.Text>
-                    <h1>Welcome, {userProfile.FirstName} </h1>
-                    {userProfile.bio}
-                  </Card.Text>
-                  <Link to={`/profileEdit/${userProfile.id}`} className='btn btn-primary'>Edit Profile</Link>
-                </Card.Body>
-              </div>
+      {user ? (
+        <div className="container">
+          <div className="fb-profile">
+            {/* <Card.Img align="left" className="fb-image-profile thumbnail"  src={user.profile_image} alt={user.username} /> */}
+            <div className="fb-profile-text">
+              <Card.Body>
+                <Card.Title><h1> HI, {user.FirstName}</h1></Card.Title>
+                <Card.Text>
+                  <h1>Welcome, {user.FirstName} </h1>
+                  {user.bio}
+                </Card.Text>
+                <Link to={`/profileEdit/${user.id}`} className='btn btn-primary'>Edit Profile</Link>
+              </Card.Body>
             </div>
           </div>
-        )  : (
-          <>
-            {errors ? <h2>Oops something went wrong.</h2> : <h2>Loading...</h2>}
-          </>
-        )}
+        </div>
+      )  : (
+        <>
+          {errors ? <h2>Oops something went wrong.</h2> : <h2>Loading...</h2>}
+        </>
+      )}
+
       </div>
     </Container>
   );

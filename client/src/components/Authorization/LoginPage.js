@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import axios from 'axios'
-import { userIsAuthenticated } from '../helpers/auth';
+import { userIsAuthenticated, setId, getPayLoad } from '../helpers/auth';
 
 const LoginPage = () => {
   const navigate = useNavigate() 
@@ -33,6 +33,10 @@ const LoginPage = () => {
       })
       console.log(data);
       window.localStorage.setItem('local-user-Token', data.token); 
+      const payload = getPayLoad();
+      if (payload && payload.userId) {
+        setId(payload.userId);
+      }
       setIsAuthenticated(true);
       navigate('/');
     } catch (error) {
@@ -40,7 +44,7 @@ const LoginPage = () => {
       console.log(error.message);
     }
   };
-
+  
 
   return (
     <main className='form-login'>

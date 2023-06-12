@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Container, Row, Col, Card, Button, Form, Pagination } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faMapMarkerAlt, faTags, faTicketAlt } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import '../../styles/eventHomePage.css';
 
 const EventHomePage = () => {
@@ -16,9 +16,9 @@ const EventHomePage = () => {
     const [IsOnline, setIsOnline] = useState(false);
     const [currentEvents, setCurrentEvents] = useState([]);
 
-    const [selectedCategory, setSelectedCategory] = useState(''); // add this line
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [allCategories, setAllCategories] = useState([]);
-
+    let { id } = useParams();
     useEffect(() => {
         const fetchEvents = async () => {
             try {

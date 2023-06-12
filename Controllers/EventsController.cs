@@ -61,20 +61,19 @@ public class EventsController : ControllerBase
         return Ok(categories);
     }
 
-    // POST: api/Events
-    [HttpPost]
+    // POST: api/Events/createEvent
+    [HttpPost("createEvent")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<Event>> PostEvent(Event newEvent)
+    public async Task<ActionResult<Event>> CreateEvent(Event newEvent)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        
+    
         _context.Events.Add(newEvent);
         await _context.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetEvent), new { id = newEvent.Id }, newEvent);
     }
 }
-

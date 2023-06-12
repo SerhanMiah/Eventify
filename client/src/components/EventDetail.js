@@ -12,6 +12,7 @@ const EventDetail = () => {
         const fetchEvent = async () => {
             try {
                 const response = await axios.get(`http://localhost:5245/api/events/${id}`);
+                console.log('Event id to -> ', setEvent(response.data))
                 setEvent(response.data);
             } catch (error) {
                 console.error('Error fetching data from server', error);
