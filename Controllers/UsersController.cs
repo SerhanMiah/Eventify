@@ -35,7 +35,7 @@ namespace Eventify.Controllers
                     return NotFound("User not found.");
                 }
 
-                return Ok(user); // Return the user object as a response
+                return Ok(user);
             }
             catch (Exception ex)
             {

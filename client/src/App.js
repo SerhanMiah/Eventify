@@ -38,8 +38,8 @@ function App() {
           <Route path="/" element={<EventHomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path='/profile/' element={<ProfilePage  />} />
-          <Route path="/profile/:userId" component={ProfilePage} />
+          {/* Profile section */}
+          <Route path='/profile' element={<ProfilePage  />} />
 
 
           <Route path='/events/:id' element={<EventDetail  />} />
