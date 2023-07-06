@@ -1,89 +1,64 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../../styles/login.css';
-import { useNavigate } from 'react-router-dom'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import axios from 'axios'
-import { userIsAuthenticated, setId, getPayLoad } from '../helpers/auth';
+import axios from 'axios';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { setUserSession, setToken, setId } from '../helpers/auth'
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const navigate = useNavigate() 
-  const [isAuthenticated, setIsAuthenticated] = useState(userIsAuthenticated);
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ Email: '', Password: '' });
 
-  const [ loginData, setLoginData ] = useState({
-    username: '',
-    password: '',
-  })
-  const [ errors, setErrors ] = useState(false)
-
-  const handleChange = (event) => {
-    setLoginData({ ...loginData, [event.target.name]: event.target.value  })
-  }
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const { data } = await axios.post('http://localhost:5245/api/auth/login', {
-        username: loginData.username,
-        password: loginData.password,
-      })
-      console.log(data);
-      window.localStorage.setItem('local-user-Token', data.token); 
-      const payload = getPayLoad();
-      if (payload && payload.userId) {
-        setId(payload.userId);
-      }
-      setIsAuthenticated(true);
-      navigate('/');
-    } catch (error) {
-      setErrors(error.message);
-      console.log(error.message);
-    }
+  const handleChange = e => {
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
+
+  const login = () => {
+    axios.post('http://localhost:5245/api/auth/login', { Email: user.Email, Password: user.Password })
+      .then(response => {
+        const token = response.data.token;  // Extract the token
+        const userInfo = response.data; // Extract user info, adjust according to your API response structure
+  
+        // handle success
+        setUserSession(token, userInfo);
+        console.log(response);
+        console.log('login successful', response);
+      })
+      .catch(error => {
+        // handle error
+        console.log(error);
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  };
+  
   
 
   return (
-    <main className='form-login'>
-      <Container>
-        <Row className="justify-content-md-center">
-          <Col xs={12} md={8} lg={6}>
-            <div className="login-panel">
-              <h1>Login</h1>
-              <Form onSubmit={onSubmit} className='login-form'>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control type='text' name='username' placeholder='Enter username' onChange={handleChange} value={loginData.username} />   
-                </Form.Group>
+    <Container>
+      <Row className="justify-content-md-center">
+        <Col xs={12} md={6}>
+          <h1 className="text-center">Login</h1>
+          <Form>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" name="Email" placeholder="Enter email" onChange={handleChange} />
+            </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type='password' name='password' placeholder='Password' onChange={handleChange} value={loginData.password} />
-                </Form.Group>
-
-                <Button variant="primary" type="submit" block>
-                  Submit
-                </Button>
-
-                {errors && <div className='error'>{errors}</div>}
-
-                <div className="mt-3">
-                  <Link to="/forgot-password">Forgot password?</Link>
-                </div>
-
-                <div className="mt-2">
-                  Don't have an account? <Link to="/register">Register</Link>
-                </div>
-              </Form>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </main>     
-  )
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" name="Password" placeholder="Password" onChange={handleChange} />
+            </Form.Group>
+            <Button variant="primary" type="button" onClick={login} className="w-100">
+              Login
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default LoginPage;

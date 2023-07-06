@@ -74,5 +74,8 @@ namespace Eventify.Models
         public ICollection<Ticket>? Tickets { get; set; } // List of tickets associated with this event
 
         public ICollection<Attendee>? Attendees { get; set; } // List of attendees for this event
+
+        public ICollection<EventAttendance> EventAttendances { get; set; }
+
     }
 }

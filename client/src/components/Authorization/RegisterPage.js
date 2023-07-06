@@ -1,93 +1,186 @@
-import React, { useState } from 'react';
 import axios from 'axios';
+import { Col } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Container from 'react-bootstrap/Container'
-import Row  from 'react-bootstrap/Row'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 
-import '../../styles/register.css';
-
-const RegisterPage = () => {
+const Register = () => {
   const navigate = useNavigate();
-  const [errors, setErrors] = useState('');
-  const [formData, setFormData] = useState({
-    Username: '',
+
+  const [user, setUser] = useState({
     Email: '',
     Password: '',
-    password_confirmation: '' 
+    ConfirmPassword: '',
+    FirstName: '',
+    LastName: '',
+    Address: '',
+    City: '',
+    State: '',
+    PostalCode: '',
+    Country: ''
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const [errors, setErrors] = useState('');
+
+  const handleChange = (event) => {
+    const newObj = { ...user, [event.target.name]: event.target.value };
+    setUser(newObj);
+    setErrors('');
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(formData.Password !== formData.password_confirmation){
-      setErrors('Password and Confirm Password do not match.');
-      return;
-    }
     try {
-      const userRegistrationDto = {
-        Username: formData.Username,
-        Email: formData.Email,
-        Password: formData.Password
-      };
-      const { data } = await axios.post('http://localhost:5245/api/auth/register', userRegistrationDto);
-
-      console.log(data);
+      const { data } = await axios.post('http://localhost:5245/api/auth/register', user);
+      console.log('User has been successfully created', data);
       navigate('/login');
     } catch (error) {
-      setErrors(error.response.data);
-      console.log(error.response.data);
+      setErrors(error.message);
+      console.log(error.message);
     }
   };
 
   return (
-    <main className='form-page'>
-      <Container className='register-form' as='main'>
-        <Row>
-          <h1>Register</h1>    
-          
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>User Name</Form.Label>
-              <Form.Control onChange={handleChange} type="text" name="Username" placeholder="username" value={formData.Username} /> 
-            </Form.Group>
-  
-            <Form.Group className="mb-3">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control  onChange={handleChange} type="email" name="Email" placeholder='Email' value={formData.Email}  />
-              <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-  
-            <Form.Group className="mb-3">
-              <Form.Label>Password</Form.Label>
-              <Form.Control onChange={handleChange} type="password" name="Password" placeholder='Password' value={formData.Password}  />
-            </Form.Group>
-  
-            <Form.Group className="mb-3">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control onChange={handleChange} type="password" name="password_confirmation" placeholder='Confirm Password' value={formData.password_confirmation} /> 
-            </Form.Group>
-  
-            { errors && <p className='text-danger'>{errors}</p>}
-  
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-  
+    <main className="form-page">
+      <Container className="register-form crunch-form" as="main">
+        <Row className="justify-content-md-center">
+          <Col xs={12} md={6}>
+            <h1>Register</h1>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="FirstName"
+                  placeholder="Enter your first name"
+                  value={user.FirstName}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="LastName"
+                  placeholder="Enter your last name"
+                  value={user.LastName}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="email"
+                  name="Email"
+                  placeholder="Enter your email"
+                  value={user.Email}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="password"
+                  name="Password"
+                  placeholder="Enter your password"
+                  value={user.Password}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="password"
+                  name="ConfirmPassword"
+                  placeholder="Confirm your password"
+                  value={user.ConfirmPassword}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="Address"
+                  placeholder="Enter your address"
+                  value={user.Address}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>City</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="City"
+                  placeholder="Enter your city"
+                  value={user.City}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>State</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="State"
+                  placeholder="Enter your state"
+                  value={user.State}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Postal Code</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="PostalCode"
+                  placeholder="Enter your postal code"
+                  value={user.PostalCode}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Country</Form.Label>
+                <Form.Control
+                  onChange={handleChange}
+                  type="text"
+                  name="Country"
+                  placeholder="Enter your country"
+                  value={user.Country}
+                  required
+                />
+              </Form.Group>
+
+              {errors && <p className="text-danger">{errors}</p>}
+
+              <Button variant="primary" type="submit">
+                Register
+              </Button>
+            </Form>
+          </Col>
         </Row>
       </Container>
     </main>
   );
 };
 
-export default RegisterPage;
+export default Register;

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 import '../styles/eventdetail.css';
 
 const EventDetail = () => {
     const { id } = useParams();
     const [event, setEvent] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchEvent = async () => {
             try {
                 const response = await axios.get(`http://localhost:5245/api/events/${id}`);
-                console.log('Event id to -> ', setEvent(response.data))
                 setEvent(response.data);
             } catch (error) {
                 console.error('Error fetching data from server', error);
@@ -22,12 +22,24 @@ const EventDetail = () => {
         fetchEvent();
     }, [id]);
 
+    const attendEvent = async () => {
+        try {
+            const response = await axios.post(`http://localhost:5245/api/EventAttendance/${id}`);
+            if(response.status === 200) {
+                alert("Successfully attended event");
+                navigate('/');
+            }
+        } catch (error) {
+            console.error('Error attending the event', error);
+        }
+    };
+
     return (
         <Container className="event-detail-container">
             <Row>
                 <Col xs={12} md={8}>
                     <h1 className="event-title">{event.name}</h1>
-                    <Badge variant="info">{event.category}</Badge>   {/* Assuming your event object has a category field */}
+                    <Badge variant="info">{event.category}</Badge>
                     <img className="event-image" src={event.imageUrl} alt={event.name} />
                     <h2>About This Event</h2>
                     <p className="event-description">{event.description}</p>
@@ -42,17 +54,18 @@ const EventDetail = () => {
                             <Card.Title>Organizer</Card.Title>
                             <Card.Text>{event.organizer}</Card.Text>
                             <Card.Title>Category</Card.Title>
-                            <Card.Text>{event.category}</Card.Text>  {/* Assuming your event object has a category field */}
+                            <Card.Text>{event.category}</Card.Text>
                             <Button variant="primary" href={event.ticketLink} target="_blank" rel="noopener noreferrer">
                                 Book Tickets
                             </Button>
+                            <Button variant="success" onClick={attendEvent}>Attend Event</Button>
                         </Card.Body>
                     </Card>
                     <Card className="event-organizer-card">
                         <Card.Body>
                             <Card.Title>About the Organizer</Card.Title>
-                            <Card.Text>{event.organizerDescription}   {/* Assuming your event object has a organizerDescription field */}</Card.Text>
-                            <Button variant="primary" href={event.organizerLink} target="_blank" rel="noopener noreferrer"> {/* Assuming your event object has a organizerLink field */}
+                            <Card.Text>{event.organizerDescription}</Card.Text>
+                            <Button variant="primary" href={event.organizerLink} target="_blank" rel="noopener noreferrer">
                                 View Organizer Profile
                             </Button>
                         </Card.Body>

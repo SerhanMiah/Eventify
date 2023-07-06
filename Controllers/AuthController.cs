@@ -1,86 +1,169 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Eventify.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+    using Eventify.Models;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.IdentityModel.Tokens;
 
 
 
-namespace Eventify.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    namespace Eventify.Controllers
     {
-        private readonly ILogger<AuthController> _logger;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IConfiguration _config;
-
-        public AuthController(ILogger<AuthController> logger, UserManager<ApplicationUser> userManager, IConfiguration config)
+        [Route("api/[controller]")]
+        [ApiController]
+        public class AuthController : ControllerBase
         {
-            _logger = logger;
-            _userManager = userManager;
-            _config = config;
-        }
+            private readonly UserManager<ApplicationUser> _userManager;
+            private readonly SignInManager<ApplicationUser> _signInManager;
+            private readonly IConfiguration _configuration;
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register(UserRegistrationDto userRegistrationDto)
-        {
-            var existingUser = await _userManager.FindByEmailAsync(userRegistrationDto.Email);
-
-            if (existingUser != null)
+            public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
             {
-                return BadRequest(new { Message = "User with this email already exists." });
+                _userManager = userManager;
+                _signInManager = signInManager;
+                _configuration = configuration;
             }
 
-            existingUser = await _userManager.FindByNameAsync(userRegistrationDto.Username);
-
-            if (existingUser != null)
+            [HttpPost]
+            [Route("register")]
+            public async Task<IActionResult> Register(RegisterViewModel model)
             {
-                return BadRequest(new { Message = "User with this username already exists." });
-            }
-
-            var user = new ApplicationUser { UserName = userRegistrationDto.Username, Email = userRegistrationDto.Email };
-            var result = await _userManager.CreateAsync(user, userRegistrationDto.Password);
-
-            if (result.Succeeded)
-            {
-                return Ok(new { Message = "Registration successful" });
-            }
-            else
-            {
-                return BadRequest(result.Errors);
-            }
-        }
-
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
-        {
-            var user = await _userManager.FindByNameAsync(userLoginDto.Username);
-
-            if (user != null && await _userManager.CheckPasswordAsync(user, userLoginDto.Password))
-            {
-                var claims = new[]
+                if (!ModelState.IsValid)
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    return BadRequest(ModelState);
+                }
+
+                var userExists = await _userManager.FindByEmailAsync(model.Email);
+
+                if (userExists != null)
+                {
+                    return BadRequest(new { message = "User already exists with this email." });
+                }
+
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Address = model.Address,
+                    City = model.City,
+                    State = model.State,
+                    PostalCode = model.PostalCode,
+                    Country = model.Country
                 };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-                    _config["Jwt:Issuer"],
-                    claims,
-                    expires: DateTime.Now.AddMinutes(30),
-                    signingCredentials: creds);
 
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                if (string.IsNullOrEmpty(model.Password))
+                {
+                    return BadRequest(new { message = "Password cannot be null or empty." });
+                }
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return Ok(new { message = "User successfully registered and signed in." });
+                }
+
+                return BadRequest(result.Errors);
             }
 
-            return BadRequest("Invalid username or password.");
-        }
+            [HttpPost]
+            [Route("login")]
+            public async Task<IActionResult> Login([FromBody] LoginViewModel userModel)
+            {
+                if (!ModelState.IsValid || string.IsNullOrEmpty(userModel.Password) || string.IsNullOrEmpty(userModel.Email))
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var user = await _userManager.FindByEmailAsync(userModel.Email);
+
+                if (user == null)
+                {
+                    return BadRequest("User does not exist");
+                }
+
+                if (!await _userManager.CheckPasswordAsync(user, userModel.Password))
+                {
+                    return BadRequest("Invalid password");
+                }
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim(ClaimTypes.Name, user.UserName ?? ""),
+                };
+
+                var token = GenerateJwtToken(claims);
+
+                return Ok(new { Token = token });
+            }
+
+            [HttpGet]
+            [Route("profile")]
+            [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+            public async Task<IActionResult> GetProfile()
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized();
+                }
+
+                var user = await _userManager.FindByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                var profile = new
+                {
+                    user.Id,
+                    user.Email,
+                    user.UserName,
+                    user.FirstName,
+                    user.LastName,
+                    user.Address,
+                    user.City,
+                    user.State,
+                    user.PostalCode,
+                    user.Country
+                };
+
+                return Ok(profile);
+            }
+
+
+            private string GenerateJwtToken(List<Claim> claims)
+            {
+                var jwtKey = _configuration["Jwt:Key"];
+
+                if (string.IsNullOrEmpty(jwtKey))
+                {
+                    throw new ArgumentNullException("Jwt:Key cannot be null or empty in configuration.");
+                }
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["Jwt:Issuer"],
+                    audience: _configuration["Jwt:Issuer"],
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddDays(7),
+                    signingCredentials: credentials
+                );
+
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
     }
-}
+
+    }

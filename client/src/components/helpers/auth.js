@@ -1,52 +1,55 @@
-
-import { Buffer } from 'buffer'
+const TOKEN_KEY = 'local-user-Token';
+const ID_KEY = 'local-user-Id';
+const USER_INFO_KEY = 'userInfo';
 
 export const setToken = (token) => {
-  window.localStorage.setItem('local-user-Token', token)
-}
-export const setId = (id) => {
-  console.log('Setting user id: ', id); 
-  window.localStorage.setItem('local-user-Id', id)
-}
+  window.localStorage.setItem(TOKEN_KEY, token);
+};
 
 export const getToken = () => {
-  return window.localStorage.getItem('local-user-Token')
-}
+  return window.localStorage.getItem(TOKEN_KEY);
+};
 
 export const getId = () => {
-  const id = window.localStorage.getItem('local-user-Id');
-  console.log('Getting user id: ', id);  // Add this
-  return id;
-}
+  return window.localStorage.getItem(ID_KEY);
+};
 
-export const getPayLoad = () => {
-  const token = getToken()
-  console.log(token)
-  if (!token) return 
-  const splitToken = token.split('.')
-  if (splitToken.length !== 3) return 
-  return JSON.parse(Buffer.from(splitToken[1], 'base64'))
-}
+export const getUserInfo = () => {
+  const id = getId();
+  const token = getToken();
 
-export const userIsAuthenticated = () => {
-  const payload = getPayLoad()
-  if (!payload) return false
-  const currentTime = Math.round(Date.now() / 1000) 
-  return currentTime < payload.exp
-}
+  const userInfo = id && token ? { id, token } : null;
 
+  // console.log('Token:', userInfo?.token);
+  // console.log('ID:', userInfo?.id);
+  // console.log('getUserInfo:', userInfo);  // debug line
+
+  return userInfo;
+};
+
+export const setUserInfo = (userInfo) => {
+  const data = JSON.stringify(userInfo);
+  window.localStorage.setItem(USER_INFO_KEY, data);
+};
+
+export const setUserSession = (token, userInfo) => {
+  setToken(token);
+  setUserInfo(userInfo);
+  // setId(userInfo.id);  // Uncomment if you have a valid setUserId function
+};
+
+export const clearUserSession = () => {
+  window.localStorage.removeItem(TOKEN_KEY);
+  window.localStorage.removeItem(ID_KEY);
+  window.localStorage.removeItem(USER_INFO_KEY);
+};
 
 export const userIsOwner = (item) => {
-  const payload = getPayLoad()
-  if (!payload) return
-  return payload.userId === item.createdBy 
-}
+  const userInfo = getUserInfo();
+  return userInfo && userInfo.id.toString() === item.createdBy.toString();
+};
 
-export const getUserIdFromToken = () => {
-  const token = getToken();
-  if (!token) return null;
-  const splitToken = token.split('.');
-  if (splitToken.length !== 3) return null;
-  const payload = JSON.parse(Buffer.from(splitToken[1], 'base64'));
-  return payload.userId; // Assuming the user id is saved in the payload as 'userId'
-}
+export const userIsAuthenticated = () => {
+  const userInfo = getUserInfo();
+  return Boolean(userInfo && userInfo.token);
+};

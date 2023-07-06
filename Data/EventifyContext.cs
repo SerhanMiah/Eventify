@@ -16,11 +16,14 @@ namespace Eventify.Data
         public DbSet<Ticket> Tickets {get; set;}
         public DbSet<Attendee> Attendees {get; set;}
 
+        public DbSet<EventAttendance> EventAttendances { get; set; }
+
         public DbSet<ApplicationUser> ApplicationUsers {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {   
             base.OnModelCreating(modelBuilder);
+
             modelBuilder
                 .Entity<Event>()
                 .Property(e => e.Category)
@@ -31,10 +34,19 @@ namespace Eventify.Data
                 .Property(t => t.Price)
                 .HasPrecision(18, 2);
 
-            modelBuilder
-                .Entity<Event>()
-                .Property(e => e.Category)
-                .HasConversion<string>();
+            modelBuilder.Entity<EventAttendance>()
+                .HasKey(ea => new { ea.UserId, ea.EventId });
+
+            modelBuilder.Entity<EventAttendance>()
+                .HasOne(ea => ea.User)
+                .WithMany(u => u.EventAttendances)
+                .HasForeignKey(ea => ea.UserId);
+
+            modelBuilder.Entity<EventAttendance>()
+                .HasOne(ea => ea.Event)
+                .WithMany(e => e.EventAttendances)
+                .HasForeignKey(ea => ea.EventId);
+        
 
             // Seeding Data - Events
            modelBuilder.Entity<Event>().HasData(
